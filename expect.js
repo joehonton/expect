@@ -16,6 +16,13 @@ class Expect {
 	constructor() {
 	}
 	
+	write(msg) {
+		if (process != undefined && process.stderr != undefined && process.stderr.write != undefined)
+			process.stderr.write(msg);
+		else if (console != undefined && console.log != undefined)
+			console.log(msg);
+	}
+	
 	//^ Check to make sure the given argument is of the expected type, and write an entry when it's not
 	//> obj is the object to check
 	//> expectedType is a string (or an array of strings) containing a prototype.name to validate against
@@ -37,7 +44,7 @@ class Expect {
 			}
 		}
 		else {
-			process.stderr.write(`[*EXPECT*] Logic: 'type' should be a String or an Array of Strings`);
+			this.write(`[*EXPECT*] Logic: 'type' should be a String or an Array of Strings`);
 			return false;
 		}
 	
@@ -48,11 +55,11 @@ class Expect {
 			s = "Expected one of these types '" + expectedType.join('|') + "'";
 			
 		if (obj === undefined)
-			process.stderr.write(`[*EXPECT*]${this.getFunctionName(4)} ${s}, but got 'undefined' ${message}\n`);
+			this.write(`[*EXPECT*]${this.getFunctionName(4)} ${s}, but got 'undefined' ${message}\n`);
 		else if (obj === null)
-			process.stderr.write(`[*EXPECT*]${this.getFunctionName(4)} ${s}, but got 'null' ${message}\n`);
+			this.write(`[*EXPECT*]${this.getFunctionName(4)} ${s}, but got 'null' ${message}\n`);
 		else
-			process.stderr.write(`[*EXPECT*]${this.getFunctionName(4)} ${s}, but got '${obj.constructor.name}' ${message}\n`);
+			this.write(`[*EXPECT*]${this.getFunctionName(4)} ${s}, but got '${obj.constructor.name}' ${message}\n`);
 		return false;
 	}
 	

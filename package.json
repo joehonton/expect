@@ -1,6 +1,6 @@
 {
   "name": "@joezone/expect",
-  "version": "0.9.1",
+  "version": "0.9.3",
   "description": "Contract by design explicit type checking",
   "author":"Joe Honton",
   "repository": {
